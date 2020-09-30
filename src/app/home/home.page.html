@@ -1,14 +1,110 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>
-      Ionic Blank
+      Ion Intl Tel Input
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <div class="ion-padding">
-    The world is your oyster.
-    <p>If you get lost, the <a target="_blank" rel="noopener" href="https://ionicframework.com/docs/">docs</a> will be your guide.</p>
+    <h3>Template Driven Forms</h3>
+    <ion-list lines="full" class="ion-no-margin ion-no-padding ion-margin-bottom">
+      <ion-item>
+        <ion-label position="floating">Tel Input</ion-label>
+        <ion-intl-tel-input 
+          id="phone" 
+          name="phone" 
+          [(ngModel)]="phone" 
+          #phoneControl="ngModel"
+          ionIntlTelInputValid
+          [defaultCountryiso]="defaultCountryIsoTest"
+          [dialCodePrefix]= "dialCodePrefix"
+          [enableAutoCountrySelect]="enableAutoCountrySelect"
+          [enablePlaceholder]="enablePlaceholder"
+          [fallbackPlaceholder]="fallbackPlaceholder"
+          [inputPlaceholder]="inputPlaceholder"
+          [maxLength]= "maxLength"
+          [modalTitle]="modalTitle"
+          [modalCssClass]="modalCssClass"
+          [modalSearchPlaceholder]="modalSearchPlaceholder"
+          [modalCloseText]="modalCloseText"
+          [modalCloseButtonSlot]= "modalCloseButtonSlot"
+          [modalCanSearch]="modalCanSearch"
+          [modalShouldBackdropClose]="modalShouldBackdropClose"
+          [modalShouldFocusSearchbar]="modalShouldFocusSearchbar"
+          [modalSearchFailText]="modalSearchFailText"
+          [onlyCountries]= "onlyCountries"
+          [preferredCountries]="preferredCountries"
+          [selectFirstCountry]="selectFirstCountry"
+          [separateDialCode]="separateDialCode"
+        >
+        </ion-intl-tel-input>
+      </ion-item>
+
+      <div *ngIf="phoneControl.invalid && phoneControl.touched">
+        <ion-text color="danger" *ngIf="phoneControl.errors.required">
+          <p class="ion-no-margin"><sub>Phone is required.</sub></p>
+        </ion-text>
+        <ion-text color="danger" *ngIf="phoneControl.errors.valid">
+          <p class="ion-no-margin"><sub>Phone is not valid.</sub></p>
+        </ion-text>
+      </div>
+
+      <div class="ion-text-center">
+        <ion-button fill="solid" type="button" (click)="logPhone()">
+          Submit
+        </ion-button>
+      </div>
+    </ion-list>
+
+    <!-- <h3 class="ion-margin-top">Reactive Forms</h3>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <ion-list lines="full" class="ion-no-margin ion-no-padding ion-margin-bottom">
+        <ion-item>
+          <ion-label position="floating">Tel Input</ion-label>
+          <ion-intl-tel-input 
+            formControlName="phoneNumber"
+            [defaultCountryiso]="defaultCountryIsoTest"
+            [dialCodePrefix]= "dialCodePrefix"
+            [enableAutoCountrySelect]="enableAutoCountrySelect"
+            [enablePlaceholder]="enablePlaceholder"
+            [fallbackPlaceholder]="fallbackPlaceholder"
+            [inputPlaceholder]="inputPlaceholder"
+            [maxLength]= "maxLength"
+            [modalTitle]="modalTitle"
+            [modalCssClass]="modalCssClass"
+            [modalSearchPlaceholder]="modalSearchPlaceholder"
+            [modalCloseText]="modalCloseText"
+            [modalCloseButtonSlot]= "modalCloseButtonSlot"
+            [modalCanSearch]="modalCanSearch"
+            [modalShouldBackdropClose]="modalShouldBackdropClose"
+            [modalShouldFocusSearchbar]="modalShouldFocusSearchbar"
+            [modalSearchFailText]="modalSearchFailText"
+            [onlyCountries]= "onlyCountries"
+            [preferredCountries]="preferredCountries"
+            [selectFirstCountry]="selectFirstCountry"
+            [separateDialCode]="separateDialCode"
+          >
+          </ion-intl-tel-input>
+        </ion-item>
+
+        <div *ngIf="phoneNumber.invalid && phoneNumber.touched">
+          <ion-text color="danger" *ngIf="phoneNumber.errors.required">
+            <p class="ion-no-margin"><sub>Phone is required.</sub></p>
+          </ion-text>
+          <ion-text color="danger" *ngIf="phoneNumber.errors.valid">
+            <p class="ion-no-margin"><sub>Phone number is not valid.</sub></p>
+          </ion-text>
+        </div>
+      </ion-list>
+
+      <div class="ion-text-center">
+        <ion-button fill="solid" type="submit">
+          Submit
+        </ion-button>
+      </div>
+    </form> -->
+
   </div>
 </ion-content>

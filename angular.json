@@ -33,6 +33,9 @@
             ],
             "styles": [
               {
+                "input": "node_modules/flag-icon-css/sass/flag-icon.scss"
+              },
+              {
                 "input": "src/theme/variables.scss"
               },
               {
@@ -168,6 +171,41 @@
               "cordovaBuildTarget": "app:ionic-cordova-build:production",
               "devServerTarget": "app:serve:production"
             }
+          }
+        }
+      }
+    },
+    "ion-intl-tel-input": {
+      "projectType": "library",
+      "root": "projects/ion-intl-tel-input",
+      "sourceRoot": "projects/ion-intl-tel-input/src",
+      "prefix": "",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/ion-intl-tel-input/tsconfig.lib.json",
+            "project": "projects/ion-intl-tel-input/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/ion-intl-tel-input/src/test.ts",
+            "tsConfig": "projects/ion-intl-tel-input/tsconfig.spec.json",
+            "karmaConfig": "projects/ion-intl-tel-input/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/ion-intl-tel-input/tsconfig.lib.json",
+              "projects/ion-intl-tel-input/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
           }
         }
       }

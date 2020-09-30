@@ -1,17 +1,48 @@
 {
-  "name": "isIonIntlTelInput",
-  "version": "0.0.1",
-  "author": "Ionic Framework",
-  "homepage": "https://ionicframework.com/",
+  "version": "1.0.0",
+  "name": "ion-intl-tel-input",
+  "title": "Ion Intl Tel Input",
+  "description": "An Ionic component for International Phone Number Input, that allows all countries, validation with google phone lib, limited countries, preferred countries, virtual scrolling and much more.",
+  "author": {
+    "name": "Azzam Asghar",
+    "url": "https://github.com/azzamasghar1"
+  },
+  "license": "See license in LICENSE",
+  "homepage": "https://github.com/azzamasghar1/ion-intl-tel-input",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/azzamasghar1/ion-intl-tel-input"
+  },
+  "bugs": {
+    "url": "https://github.com/azzamasghar1/ion-intl-tel-input/issues"
+  },
+  "keywords": [
+    "ionic",
+    "ionic 2",
+    "ionic 3",
+    "ionic 4",
+    "ion-intl-tel-input",
+    "intl tel input",
+    "intl",
+    "tel",
+    "input",
+    "international",
+    "phone",
+    "phonenumber",
+    "telephone",
+    "number"
+  ],
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "build_lib": "ng build ion-intl-tel-input",
+    "npm_pack": "cd dist/ion-intl-tel-input && npm pack",
+    "package": "npm run build_lib && npm run npm_pack"
   },
-  "private": true,
   "dependencies": {
     "@angular/common": "~8.1.2",
     "@angular/core": "~8.1.2",
@@ -24,6 +55,9 @@
     "@ionic-native/status-bar": "^5.0.0",
     "@ionic/angular": "^4.7.1",
     "core-js": "^2.5.4",
+    "flag-icon-css": "^3.4.5",
+    "google-libphonenumber": "^3.2.6",
+    "ionic-selectable": "^4.6.0",
     "rxjs": "~6.5.1",
     "tslib": "^1.9.0",
     "zone.js": "~0.9.1"
@@ -31,6 +65,7 @@
   "devDependencies": {
     "@angular-devkit/architect": "~0.801.2",
     "@angular-devkit/build-angular": "~0.801.2",
+    "@angular-devkit/build-ng-packagr": "~0.801.3",
     "@angular-devkit/core": "~8.1.2",
     "@angular-devkit/schematics": "~8.1.2",
     "@angular/cli": "~8.1.2",
@@ -38,6 +73,7 @@
     "@angular/compiler-cli": "~8.1.2",
     "@angular/language-service": "~8.1.2",
     "@ionic/angular-toolkit": "^2.1.1",
+    "@ionic/lab": "3.0.0",
     "@types/jasmine": "~3.3.8",
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "~8.9.4",
@@ -49,10 +85,11 @@
     "karma-coverage-istanbul-reporter": "~2.0.1",
     "karma-jasmine": "~2.0.1",
     "karma-jasmine-html-reporter": "^1.4.0",
+    "ng-packagr": "^5.1.0",
     "protractor": "~5.4.0",
     "ts-node": "~7.0.0",
+    "tsickle": "^0.35.0",
     "tslint": "~5.15.0",
     "typescript": "~3.4.3"
-  },
-  "description": "An Ionic project"
+  }
 }

@@ -17,7 +17,21 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "paths": {
+      "ion-intl-tel-input": [
+        "dist/ion-intl-tel-input"
+      ],
+      "ion-intl-tel-input/*": [
+        "dist/ion-intl-tel-input/*"
+      ],
+      "demo": [
+        "dist/demo"
+      ],
+      "demo/*": [
+        "dist/demo/*"
+      ]
+    }
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
