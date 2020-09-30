@@ -31,12 +31,12 @@ An Ionic component for International Phone Number Input, that allows all countri
 ### Step 1: Install it.
 #### Install Independently
 ```
-npm install is-ion-intl-tel-input --save
+npm install ion-intl-tel-input --save
 ```
 
 #### Or Install with All dependencies
 ```
-npm install is-ion-intl-tel-input ionic-selectable flag-icon-css google-libphonenumber --save
+npm install ion-intl-tel-input ionic-selectable flag-icon-css google-libphonenumber --save
 ```
 
 #### Add flag styles
