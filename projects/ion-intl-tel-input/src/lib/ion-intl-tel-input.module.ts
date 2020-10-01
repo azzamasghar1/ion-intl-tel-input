@@ -6,7 +6,7 @@ import { IonicModule } from '@ionic/angular';
 import { IonicSelectableModule } from 'ionic-selectable';
 
 import { CountryPlaceholder } from './pipes/country-placeholder';
-import { IonIntlTelInputValidatorDirective } from './ion-intl-tel-input.directive';
+import { IonIntlTelInputValidators, IonIntlTelInputValidatorDirective } from './ion-intl-tel-input.directive';
 import { IonIntlTelInputComponent } from './ion-intl-tel-input/ion-intl-tel-input.component';
 import { IonIntlTelInputService } from './ion-intl-tel-input.service';
 
@@ -23,7 +23,8 @@ import { IonIntlTelInputService } from './ion-intl-tel-input.service';
     IonicSelectableModule
   ],
   exports: [
-    IonIntlTelInputComponent
+    IonIntlTelInputComponent,
+    IonIntlTelInputValidatorDirective
   ],
   providers: [
     IonIntlTelInputService

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
-//import { ionIntlTelInputValidator } from 'ion-intl-tel-input';
+import { IonIntlTelInputValidators } from 'ion-intl-tel-input';
 
 @Component({
   selector: 'app-home',
@@ -46,7 +46,7 @@ export class HomePage implements OnInit {
         disabled: this.disableTest
       }, [
         Validators.required,
-        //ionIntlTelInputValidator
+        IonIntlTelInputValidators.phone
       ])
     });
   }

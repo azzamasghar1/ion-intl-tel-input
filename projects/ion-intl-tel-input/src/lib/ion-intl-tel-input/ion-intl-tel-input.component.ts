@@ -22,7 +22,7 @@ import { PhoneNumber, PhoneNumberFormat, PhoneNumberUtil } from 'google-libphone
 import { CountryI } from '../models/country.model';
 import { IonIntlTelInputModel } from '../models/ion-intl-tel-input.model';
 import { IonIntlTelInputService } from '../ion-intl-tel-input.service';
-//import { ionIntlTelInputValidator } from '../ion-intl-tel-input.directive';
+// import { ionIntlTelInputValidator } from '../ion-intl-tel-input.directive';
 import { raf } from '../util/util';
 
 
@@ -39,12 +39,12 @@ import { raf } from '../util/util';
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => IonIntlTelInputComponent),
       multi: true
-    },
+    }/* ,
     {
       provide: NG_VALIDATORS,
-      useValue: IonIntlTelInputComponent,
+      useValue: ionIntlTelInputValidator,
       multi: true
-    }
+    } */
   ]
 })
 

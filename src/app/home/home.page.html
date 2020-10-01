@@ -46,7 +46,7 @@
         <ion-text color="danger" *ngIf="phoneControl.errors.required">
           <p class="ion-no-margin"><sub>Phone is required.</sub></p>
         </ion-text>
-        <ion-text color="danger" *ngIf="phoneControl.errors.valid">
+        <ion-text color="danger" *ngIf="phoneControl.errors.phone">
           <p class="ion-no-margin"><sub>Phone is not valid.</sub></p>
         </ion-text>
       </div>
@@ -58,7 +58,7 @@
       </div>
     </ion-list>
 
-    <!-- <h3 class="ion-margin-top">Reactive Forms</h3>
+    <h3 class="ion-margin-top">Reactive Forms</h3>
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
       <ion-list lines="full" class="ion-no-margin ion-no-padding ion-margin-bottom">
         <ion-item>
@@ -93,7 +93,7 @@
           <ion-text color="danger" *ngIf="phoneNumber.errors.required">
             <p class="ion-no-margin"><sub>Phone is required.</sub></p>
           </ion-text>
-          <ion-text color="danger" *ngIf="phoneNumber.errors.valid">
+          <ion-text color="danger" *ngIf="phoneNumber.errors.phone">
             <p class="ion-no-margin"><sub>Phone number is not valid.</sub></p>
           </ion-text>
         </div>
@@ -104,7 +104,7 @@
           Submit
         </ion-button>
       </div>
-    </form> -->
+    </form>
 
   </div>
 </ion-content>

@@ -52,11 +52,11 @@ Add the following to your `styles` array of project in `angular.json` (located i
 First, import `IsIonIntlTelInputModule` to your `app.module.ts` that is normally located in `src\app\app.module.ts`.
 
 ```
-import { IsIonIntlTelInputModule } from 'is-ion-intl-tel-input';
+import { IonIntlTelInputModule } from 'ion-intl-tel-input';
 
 @NgModule({
   imports: [
-    IsIonIntlTelInputModule
+    IonIntlTelInputModule
   ]
 })
 export class AppModule { }
@@ -66,7 +66,7 @@ export class AppModule { }
 **Note:** Additionally, if you are using lazy loaded pages. Check if your pages have a module file, for example, `home.module.ts`, and if they do then import `IsIonIntlTelInputModule` to each page module too.
 
 ```
-import { IsIonIntlTelInputModule } from 'ionic-selectable';
+import { IonIntlTelInputModule } from 'ionic-selectable';
 import { HomePage } from './home';
 
 @NgModule({
@@ -75,7 +75,7 @@ import { HomePage } from './home';
   ],
   imports: [
     IonicPageModule.forChild(HomePage),
-    IsIonIntlTelInputModule
+    IonIntlTelInputModule
   ]
 })
 export class HomePageModule { }
@@ -88,12 +88,12 @@ export class HomePageModule { }
 <form>
   <ion-item>
     <ion-label position="stacked">Tel Input</ion-label>
-    <is-ion-intl-tel-input 
+    <ion-intl-tel-input 
       id="phone-number" 
       name="phone-number" 
       [(ngModel)]="phoneNumber" 
       #phoneNumberControl="ngModel" >
-    </is-ion-intl-tel-input>
+    </ion-intl-tel-input>
   </ion-item>
 </form>
 ```
@@ -103,9 +103,9 @@ export class HomePageModule { }
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
   <ion-item>
     <ion-label position="floating">Tel Input</ion-label>
-    <is-ion-intl-tel-input 
+    <ion-intl-tel-input 
       formControlName="phoneNumber" >
-    </is-ion-intl-tel-input>
+    </ion-intl-tel-input>
   </ion-item>
 </form>
 ```
@@ -125,7 +125,6 @@ export class HomePage {
 
 #### b. Usage with Reactive Forms
 ```
-import { isIonIntlTelInputValidator } from 'is-ion-intl-tel-input';
 
 @Component({ ... })
 export class HomePage implements OnInit {
@@ -158,19 +157,20 @@ export class HomePage implements OnInit {
 <form>
   <ion-item>
     <ion-label position="stacked">Tel Input</ion-label>
-    <is-ion-intl-tel-input 
+    <ion-intl-tel-input 
       id="phone-number" 
       name="phone-number" 
       [(ngModel)]="phoneNumber" 
-      #phoneNumberControl="ngModel" >
-    </is-ion-intl-tel-input>
+      #phoneNumberControl="ngModel"
+      ionIntlTelInputValid >
+    </ion-intl-tel-input>
   </ion-item>
 
   <div *ngIf="phoneNumberControl.invalid && phoneNumberControl.touched">
     <ion-text color="danger" *ngIf="phoneNumberControl.errors.required">
       <p class="ion-no-margin"><sub>Phone is required.</sub></p>
     </ion-text>
-    <ion-text color="danger" *ngIf="phoneNumberControl.errors.valid">
+    <ion-text color="danger" *ngIf="phoneNumberControl.errors.phone">
       <p class="ion-no-margin"><sub>Phone is not valid.</sub></p>
     </ion-text>
   </div>
@@ -182,16 +182,16 @@ export class HomePage implements OnInit {
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
   <ion-item>
     <ion-label position="floating">Tel Input</ion-label>
-    <is-ion-intl-tel-input 
+    <ion-intl-tel-input 
       formControlName="phoneNumber" >
-    </is-ion-intl-tel-input>
+    </ion-intl-tel-input>
   </ion-item>
 
   <div *ngIf="phoneNumber.invalid && phoneNumber.touched">
     <ion-text color="danger" *ngIf="phoneNumber.errors.required">
       <p class="ion-no-margin"><sub>Phone is required.</sub></p>
     </ion-text>
-    <ion-text color="danger" *ngIf="phoneNumber.errors.valid">
+    <ion-text color="danger" *ngIf="phoneNumber.errors.phone">
       <p class="ion-no-margin"><sub>Phone number is not valid.</sub></p>
     </ion-text>
   </div>
@@ -213,7 +213,7 @@ export class HomePage {
 
 #### b. Usage with Reactive Forms
 ```
-import { isIonIntlTelInputValidator } from 'is-ion-intl-tel-input';
+import { IonIntlTelInputValidators } from 'is-ion-intl-tel-input';
 
 @Component({ ... })
 export class HomePage implements OnInit {
@@ -229,7 +229,7 @@ export class HomePage implements OnInit {
         value: this.formValue.phoneNumber
       }, [
         Validators.required,
-        isIonIntlTelInputValidator
+        IonIntlTelInputValidators.phone
       ])
     });
   }
