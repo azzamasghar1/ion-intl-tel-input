@@ -47,35 +47,33 @@ import { PhoneNumber, PhoneNumberUtil } from 'google-libphonenumber';
 export class IonIntlTelInputValidators {
   static phone(control: AbstractControl): ValidationErrors | null {
     const error = { phone: true };
-    const isRequired = control.errors && control.errors.required;
     let phoneNumber: PhoneNumber;
+
+    if (!control.value) {
+      return error;
+    }
 
     try {
       phoneNumber = PhoneNumberUtil.getInstance().parse(
-        control.value.number,
+        control.value.nationalNumber,
         control.value.isoCode
       );
     } catch (e) {
-      if (!isRequired) {
-        return error;
-      }
+      return error;
     }
 
-    if (control.value) {
-      if (!phoneNumber) {
+    if (!phoneNumber) {
+      return error;
+    } else {
+      if (
+        !PhoneNumberUtil.getInstance().isValidNumberForRegion(
+          phoneNumber,
+          control.value.isoCode
+        )
+      ) {
         return error;
-      } else {
-        if (
-          !PhoneNumberUtil.getInstance().isValidNumberForRegion(
-            phoneNumber,
-            control.value.isoCode
-          )
-        ) {
-          return error;
-        }
       }
     }
-    return;
   }
 }
 
@@ -92,7 +90,6 @@ export class IonIntlTelInputValidators {
 })
 export class IonIntlTelInputValidatorDirective implements Validator {
   validate(control: AbstractControl): ValidationErrors | null {
-    console.log('validate');
     return IonIntlTelInputValidators.phone(control);
   }
 }

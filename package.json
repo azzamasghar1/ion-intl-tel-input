@@ -1,5 +1,5 @@
 {
-  "version": "1.0.2",
+  "version": "1.0.5",
   "name": "ion-intl-tel-input",
   "title": "Ion Intl Tel Input",
   "description": "An Ionic component for International Phone Number Input, that allows all countries, validation with google phone lib, limited countries, preferred countries, virtual scrolling and much more.",
@@ -30,7 +30,8 @@
     "phone",
     "phonenumber",
     "telephone",
-    "number"
+    "number",
+    "elktech"
   ],
   "scripts": {
     "ng": "ng",
@@ -40,7 +41,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "build_lib": "ng build ion-intl-tel-input",
-    "serve": "ng build ion-intl-tel-input --watch",
+    "serve_lib": "ng build ion-intl-tel-input --watch",
     "npm_pack": "cd dist/ion-intl-tel-input && npm pack",
     "package": "npm run build_lib && npm run npm_pack",
     "publish": "npm run package && cd dist/ion-intl-tel-input && npm publish"

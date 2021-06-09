@@ -12,7 +12,6 @@ An Ionic component for International Phone Number Input, that allows all countri
     + [Step 3: Add it to template.](#Step-3-Add-it-to-template)
     + [Step 4: Configure it.](#Step-4-Configure-it)
     + [Step 5: Add validation.](#Step-5-Add-validation)
-    + [Step 6: Configure validation.](#Step-6-Configure-validation)
   * [Options](#Options)
   * [Events](#Events)
   * [Contributing](#Contributing)
@@ -49,7 +48,7 @@ Add the following to your `styles` array of project in `angular.json` (located i
 
 ### Step 2: Import it.
 
-First, import `IsIonIntlTelInputModule` to your `app.module.ts` that is normally located in `src\app\app.module.ts`.
+First, import `IonIntlTelInputModule` to your `app.module.ts` that is normally located in `src\app\app.module.ts`.
 
 ```
 import { IonIntlTelInputModule } from 'ion-intl-tel-input';
@@ -63,10 +62,10 @@ export class AppModule { }
 
 ```
 
-**Note:** Additionally, if you are using lazy loaded pages. Check if your pages have a module file, for example, `home.module.ts`, and if they do then import `IsIonIntlTelInputModule` to each page module too.
+**Note:** Additionally, if you are using lazy loaded pages. Check if your pages have a module file, for example, `home.module.ts`, and if they do then import `IonIntlTelInputModule` to each page module too.
 
 ```
-import { IonIntlTelInputModule } from 'ionic-selectable';
+import { IonIntlTelInputModule } from 'ion-intl-tel-input';
 import { HomePage } from './home';
 
 @NgModule({
@@ -114,10 +113,24 @@ export class HomePageModule { }
 
 #### a. Usage with Template Driven Forms
 ```
+import { IonIntlTelInputModel } from 'ion-intl-tel-input';
+
+phone: IonIntlTelInputModel = {
+  dialCode: '+92',
+  internationalNumber: '+92 300 1234567',
+  isoCode: 'pk',
+  nationalNumber: '300 1234567'
+};
+
 @Component({ ... })
 export class HomePage {
 
-  phoneNumber = '';
+  phoneNumber = {
+    dialCode: '+92',
+    internationalNumber: '+92 300 1234567',
+    isoCode: 'pk',
+    nationalNumber: '300 1234567'
+  };
 
   constructor() { }
 }
@@ -125,11 +138,18 @@ export class HomePage {
 
 #### b. Usage with Reactive Forms
 ```
+import { IonIntlTelInputModel } from 'ion-intl-tel-input';
 
 @Component({ ... })
 export class HomePage implements OnInit {
 
-  formValue = {phoneNumber: '', test: ''};
+  phone: IonIntlTelInputModel = {
+    dialCode: '+92',
+    internationalNumber: '+92 300 1234567',
+    isoCode: 'pk',
+    nationalNumber: '300 1234567'
+  };
+  formValue = {phoneNumber: this.phone};
   form: FormGroup;
 
   constructor() { }
@@ -198,27 +218,21 @@ export class HomePage implements OnInit {
 </form>
 ```
 
-### Step 6: Configure validation.
-
-#### a. Usage with Template Driven Forms
+And in your `.ts` file:
 ```
-@Component({ ... })
-export class HomePage {
-
-  phoneNumber = '';
-
-  constructor() { }
-}
-```
-
-#### b. Usage with Reactive Forms
-```
+import { IonIntlTelInputModel } from 'ion-intl-tel-input';
 import { IonIntlTelInputValidators } from 'is-ion-intl-tel-input';
 
 @Component({ ... })
 export class HomePage implements OnInit {
 
-  formValue = {phoneNumber: '', test: ''};
+  phone: IonIntlTelInputModel = {
+    dialCode: '+92',
+    internationalNumber: '+92 300 1234567',
+    isoCode: 'pk',
+    nationalNumber: '300 1234567'
+  };
+  formValue = {phoneNumber: this.phone};
   form: FormGroup;
 
   constructor() { }

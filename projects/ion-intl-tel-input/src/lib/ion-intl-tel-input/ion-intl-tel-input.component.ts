@@ -9,22 +9,29 @@ import {
   SimpleChanges,
   ViewChild,
   ElementRef,
-  HostBinding
+  HostBinding,
 } from '@angular/core';
 
-import { NG_VALUE_ACCESSOR, ControlValueAccessor, NG_VALIDATORS } from '@angular/forms';
+import {
+  NG_VALUE_ACCESSOR,
+  ControlValueAccessor,
+  NG_VALIDATORS,
+} from '@angular/forms';
 
 import { IonInput, Platform } from '@ionic/angular';
 
 import { IonicSelectableComponent } from 'ionic-selectable';
-import { PhoneNumber, PhoneNumberFormat, PhoneNumberUtil } from 'google-libphonenumber';
+import {
+  PhoneNumber,
+  PhoneNumberFormat,
+  PhoneNumberUtil,
+} from 'google-libphonenumber';
 
 import { CountryI } from '../models/country.model';
 import { IonIntlTelInputModel } from '../models/ion-intl-tel-input.model';
 import { IonIntlTelInputService } from '../ion-intl-tel-input.service';
 // import { ionIntlTelInputValidator } from '../ion-intl-tel-input.directive';
 import { raf } from '../util/util';
-
 
 /**
  * @ignore
@@ -38,21 +45,16 @@ import { raf } from '../util/util';
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => IonIntlTelInputComponent),
-      multi: true
-    }/* ,
-    {
-      provide: NG_VALIDATORS,
-      useValue: ionIntlTelInputValidator,
-      multi: true
-    } */
-  ]
+      multi: true,
+    },
+  ],
 })
 
 /**
  * @author Azzam Asghar <azzam.asghar@interstellus.com>
  */
-export class IonIntlTelInputComponent implements ControlValueAccessor, OnInit, OnChanges {
-
+export class IonIntlTelInputComponent
+  implements ControlValueAccessor, OnInit, OnChanges {
   @HostBinding('class.ion-intl-tel-input')
   cssClass = true;
   @HostBinding('class.ion-intl-tel-input-ios')
@@ -347,31 +349,31 @@ export class IonIntlTelInputComponent implements ControlValueAccessor, OnInit, O
   @Output()
   readonly codeSelect = new EventEmitter<any>();
 
-  @ViewChild('numberInput', {static: false}) numberInputEl: IonInput;
+  @ViewChild('numberInput', { static: false }) numberInputEl: IonInput;
 
   // tslint:disable-next-line: variable-name
-  private _value: string = null;
+  private _value: IonIntlTelInputModel = null;
 
   country: CountryI;
+  phoneNumber = '';
   countries: CountryI[] = [];
   disabled = false;
-  phoneNumber = '';
   phoneUtil: any = PhoneNumberUtil.getInstance();
 
   onTouched: () => void = () => {};
-  propagateChange = (_: IonIntlTelInputModel | null) => { };
+  propagateChange = (_: IonIntlTelInputModel | null) => {};
 
   constructor(
     private el: ElementRef,
     private platform: Platform,
-    private ionIntlTelInputService: IonIntlTelInputService,
-  ) { }
+    private ionIntlTelInputService: IonIntlTelInputService
+  ) {}
 
-  get value(): string {
+  get value(): IonIntlTelInputModel | null {
     return this._value;
   }
 
-  set value(value: string) {
+  set value(value: IonIntlTelInputModel | null) {
     this._value = value;
     this.setIonicClasses(this.el);
   }
@@ -389,15 +391,19 @@ export class IonIntlTelInputComponent implements ControlValueAccessor, OnInit, O
     this.setPreferredCountries();
 
     if (this.onlyCountries.length) {
-      this.countries = this.countries
-      .filter((country: CountryI) => this.onlyCountries.includes(country.isoCode));
+      this.countries = this.countries.filter((country: CountryI) =>
+        this.onlyCountries.includes(country.isoCode)
+      );
     }
 
     if (this.selectFirstCountry) {
       if (this.defaultCountryiso) {
         this.setCountry(this.getCountryByIsoCode(this.defaultCountryiso));
       } else {
-        if (this.preferredCountries.length && this.preferredCountries.includes(this.defaultCountryiso)) {
+        if (
+          this.preferredCountries.length &&
+          this.preferredCountries.includes(this.defaultCountryiso)
+        ) {
           this.setCountry(this.getCountryByIsoCode(this.preferredCountries[0]));
         } else {
           this.setCountry(this.countries[0]);
@@ -407,8 +413,12 @@ export class IonIntlTelInputComponent implements ControlValueAccessor, OnInit, O
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (this.countries && changes.defaulyCountryisoCode
-    && changes.defaulyCountryisoCode.currentValue !== changes.defaulyCountryisoCode.previousValue) {
+    if (
+      this.countries &&
+      changes.defaulyCountryisoCode &&
+      changes.defaulyCountryisoCode.currentValue !==
+        changes.defaulyCountryisoCode.previousValue
+    ) {
       this.setCountry(changes.defaulyCountryisoCode.currentValue);
     }
   }
@@ -421,19 +431,36 @@ export class IonIntlTelInputComponent implements ControlValueAccessor, OnInit, O
     this.onTouched = fn;
   }
 
-  writeValue(obj: string): void {
-    if (obj == null) {
-      this.ngOnInit();
-    }
-    this.phoneNumber = obj;
-    this.value = this.phoneNumber;
-    setTimeout(() => {
-      this.onNumberChange();
-    }, 1);
+  writeValue(obj: IonIntlTelInputModel): void {
+    this.fillValues(obj);
   }
 
   setDisabledState(isDisabled: boolean): void {
     this.disabled = isDisabled;
+  }
+
+  fillValues(value: IonIntlTelInputModel) {
+    if (
+      value &&
+      value !== null &&
+      typeof value === 'object' &&
+      !this.isNullOrWhiteSpace(value)
+    ) {
+      this.phoneNumber = value.nationalNumber;
+      this.setCountry(this.getCountryByIsoCode(value.isoCode));
+      this.value = value;
+    } else if (
+      this.value &&
+      this.value !== null &&
+      typeof this.value === 'object' &&
+      !this.isNullOrWhiteSpace(this.value)
+    ) {
+      this.phoneNumber = this.value.nationalNumber;
+      this.setCountry(this.getCountryByIsoCode(this.value.isoCode));
+    }
+    setTimeout(() => {
+      this.onNumberChange();
+    }, 1);
   }
 
   hasValue(): boolean {
@@ -445,8 +472,8 @@ export class IonIntlTelInputComponent implements ControlValueAccessor, OnInit, O
   }
 
   onCodeChange(event: {
-    component: IonicSelectableComponent,
-    value: any
+    component: IonicSelectableComponent;
+    value: any;
   }): void {
     if (this.isNullOrWhiteSpace(this.phoneNumber)) {
       this.emitValueChange(null);
@@ -457,26 +484,24 @@ export class IonIntlTelInputComponent implements ControlValueAccessor, OnInit, O
           this.phoneNumber,
           this.country.isoCode.toUpperCase()
         );
-      } catch (e) {
-      }
+      } catch (e) {}
 
       const internationallNo = googleNumber
-      ? this.phoneUtil.format(googleNumber, PhoneNumberFormat.INTERNATIONAL)
-      : '';
+        ? this.phoneUtil.format(googleNumber, PhoneNumberFormat.INTERNATIONAL)
+        : '';
       const nationalNo = googleNumber
-      ? this.phoneUtil.format(googleNumber, PhoneNumberFormat.NATIONAL)
-      : '';
+        ? this.phoneUtil.format(googleNumber, PhoneNumberFormat.NATIONAL)
+        : '';
 
       if (this.separateDialCode && internationallNo) {
         this.phoneNumber = this.removeDialCode(internationallNo);
       }
 
       this.emitValueChange({
-        number: this.phoneNumber,
         internationalNumber: internationallNo,
         nationalNumber: nationalNo,
         isoCode: this.country.isoCode,
-        dialCode: this.dialCodePrefix + this.country.dialCode
+        dialCode: this.dialCodePrefix + this.country.dialCode,
       });
       this.codeChange.emit();
     }
@@ -494,8 +519,8 @@ export class IonIntlTelInputComponent implements ControlValueAccessor, OnInit, O
   }
 
   public onCodeSearchCountries(event: {
-    component: IonicSelectableComponent,
-    text: string
+    component: IonicSelectableComponent;
+    text: string;
   }): void {
     const text = event.text.trim().toLowerCase();
     event.component.startSearch();
@@ -532,50 +557,67 @@ export class IonIntlTelInputComponent implements ControlValueAccessor, OnInit, O
   }
 
   onNumberChange(): void {
-    this.value = this.phoneNumber;
+    if (!this.phoneNumber) {
+      this.value = null;
+      this.emitValueChange(null);
+      return;
+    }
+    if (this.country) {
+      this.emitValueChange({
+        internationalNumber:
+          this.dialCodePrefix + this.country.dialCode + ' ' + this.phoneNumber,
+        nationalNumber: this.phoneNumber,
+        isoCode: this.country.isoCode,
+        dialCode: this.dialCodePrefix + this.country.dialCode,
+      });
+    }
     let googleNumber: PhoneNumber;
     try {
-      googleNumber = this.phoneUtil.parse(this.phoneNumber, this.country.isoCode.toUpperCase());
+      googleNumber = this.phoneUtil.parse(
+        this.phoneNumber,
+        this.country.isoCode.toUpperCase()
+      );
     } catch (e) {
+      return;
     }
 
     let isoCode = this.country ? this.country.isoCode : null;
     // auto select country based on the extension (and areaCode if needed) (e.g select Canada if number starts with +1 416)
     if (this.enableAutoCountrySelect) {
-      isoCode = googleNumber && googleNumber.getCountryCode()
-      ? this.getCountryIsoCode(googleNumber.getCountryCode(), googleNumber)
-      : this.country.isoCode;
+      isoCode =
+        googleNumber && googleNumber.getCountryCode()
+          ? this.getCountryIsoCode(googleNumber.getCountryCode(), googleNumber)
+          : this.country.isoCode;
       if (isoCode && isoCode !== this.country.isoCode) {
-        const newCountry = this.countries.find((country: CountryI) => country.isoCode === isoCode);
+        const newCountry = this.countries.find(
+          (country: CountryI) => country.isoCode === isoCode
+        );
         if (newCountry) {
           this.country = newCountry;
         }
       }
     }
-    isoCode = isoCode ?
-    isoCode :
-    this.country ? this.country.isoCode : null;
+    isoCode = isoCode ? isoCode : this.country ? this.country.isoCode : null;
 
-    if (this.isNullOrWhiteSpace(this.value) || this.isNullOrWhiteSpace(isoCode)) {
+    if (!this.phoneNumber || !isoCode) {
       this.emitValueChange(null);
     } else {
       const internationallNo = googleNumber
-      ? this.phoneUtil.format(googleNumber, PhoneNumberFormat.INTERNATIONAL)
-      : '';
+        ? this.phoneUtil.format(googleNumber, PhoneNumberFormat.INTERNATIONAL)
+        : '';
       const nationalNo = googleNumber
-      ? this.phoneUtil.format(googleNumber, PhoneNumberFormat.NATIONAL)
-      : '';
+        ? this.phoneUtil.format(googleNumber, PhoneNumberFormat.NATIONAL)
+        : '';
 
       if (this.separateDialCode && internationallNo) {
         this.phoneNumber = this.removeDialCode(internationallNo);
       }
 
       this.emitValueChange({
-        number: this.phoneNumber,
         internationalNumber: internationallNo,
         nationalNumber: nationalNo,
         isoCode: this.country.isoCode,
-        dialCode: this.dialCodePrefix + this.country.dialCode
+        dialCode: this.dialCodePrefix + this.country.dialCode,
       });
     }
   }
@@ -584,38 +626,56 @@ export class IonIntlTelInputComponent implements ControlValueAccessor, OnInit, O
     const allowedChars = /^[0-9\+\-\ ]/;
     const allowedCtrlChars = /[axcv]/;
     const allowedOtherKeys = [
-      'ArrowLeft', 'ArrowUp', 'ArrowRight', 'ArrowDown',
-      'Home', 'End', 'Insert', 'Delete', 'Backspace'
+      'ArrowLeft',
+      'ArrowUp',
+      'ArrowRight',
+      'ArrowDown',
+      'Home',
+      'End',
+      'Insert',
+      'Delete',
+      'Backspace',
     ];
 
     if (
       !allowedChars.test(event.key) &&
       !(event.ctrlKey && allowedCtrlChars.test(event.key)) &&
-      !(allowedOtherKeys.includes(event.key))
+      !allowedOtherKeys.includes(event.key)
     ) {
       event.preventDefault();
     }
   }
 
   private filterCountries(text: string): CountryI[] {
-    return this.countries.filter(country => {
-      return country.name.toLowerCase().indexOf(text) !== -1 ||
+    return this.countries.filter((country) => {
+      return (
         country.name.toLowerCase().indexOf(text) !== -1 ||
-        country.dialCode.toString().toLowerCase().indexOf(text) !== -1;
+        country.name.toLowerCase().indexOf(text) !== -1 ||
+        country.dialCode.toString().toLowerCase().indexOf(text) !== -1
+      );
     });
   }
 
-  private getCountryIsoCode(countryCode: number, googleNumber: PhoneNumber): string | undefined {
+  private getCountryIsoCode(
+    countryCode: number,
+    googleNumber: PhoneNumber
+  ): string | undefined {
     const rawNumber = (googleNumber as any).values_[2].toString();
 
-    const countries = this.countries.filter((country: CountryI) => country.dialCode === countryCode.toString());
-    const mainCountry = countries.find((country: CountryI) => country.areaCodes === undefined);
-    const secondaryCountries = countries.filter((country: CountryI) => country.areaCodes !== undefined);
+    const countries = this.countries.filter(
+      (country: CountryI) => country.dialCode === countryCode.toString()
+    );
+    const mainCountry = countries.find(
+      (country: CountryI) => country.areaCodes === undefined
+    );
+    const secondaryCountries = countries.filter(
+      (country: CountryI) => country.areaCodes !== undefined
+    );
 
     let matchedCountry = mainCountry ? mainCountry.isoCode : undefined;
 
-    secondaryCountries.forEach(country => {
-      country.areaCodes.forEach(areaCode => {
+    secondaryCountries.forEach((country) => {
+      country.areaCodes.forEach((areaCode) => {
         if (rawNumber.startsWith(areaCode)) {
           matchedCountry = country.isoCode;
         }
@@ -623,7 +683,6 @@ export class IonIntlTelInputComponent implements ControlValueAccessor, OnInit, O
     });
     return matchedCountry;
   }
-
 
   private fetchAllCountries() {
     this.countries = this.ionIntlTelInputService.getListOfCountries();
@@ -642,7 +701,10 @@ export class IonIntlTelInputComponent implements ControlValueAccessor, OnInit, O
     if (value === null || value === undefined) {
       return true;
     }
-    if (typeof(value) === 'string' && value === '') {
+    if (typeof value === 'string' && value === '') {
+      return true;
+    }
+    if (typeof value === 'object' && Object.keys(value).length === 0) {
       return true;
     }
     return false;
@@ -665,12 +727,14 @@ export class IonIntlTelInputComponent implements ControlValueAccessor, OnInit, O
       const country = this.getCountryByIsoCode(preferedCountryIsoCode);
       country.priority = country ? 1 : country.priority;
     }
-    this.countries.sort((a, b) => (a.priority > b.priority) ? -1 : ((a.priority < b.priority) ? 1 : 0));
+    this.countries.sort((a, b) =>
+      a.priority > b.priority ? -1 : a.priority < b.priority ? 1 : 0
+    );
   }
 
   private startsWith = (input: string, search: string): boolean => {
     return input.substr(0, search.length) === search;
-  }
+  };
 
   private getClasses = (element: HTMLElement) => {
     const classList = element.classList;
@@ -682,7 +746,7 @@ export class IonIntlTelInputComponent implements ControlValueAccessor, OnInit, O
       }
     }
     return classes;
-  }
+  };
 
   private setClasses = (element: HTMLElement, classes: string[]) => {
     const classList = element.classList;
@@ -692,11 +756,11 @@ export class IonIntlTelInputComponent implements ControlValueAccessor, OnInit, O
       'ion-touched',
       'ion-untouched',
       'ion-dirty',
-      'ion-pristine'
-    ].forEach(c => classList.remove(c));
+      'ion-pristine',
+    ].forEach((c) => classList.remove(c));
 
-    classes.forEach(c => classList.add(c));
-  }
+    classes.forEach((c) => classList.add(c));
+  };
 
   private setIonicClasses = (element: ElementRef) => {
     raf(() => {
@@ -709,9 +773,13 @@ export class IonIntlTelInputComponent implements ControlValueAccessor, OnInit, O
         this.setClasses(item, classes);
       }
     });
-  }
+  };
 
-  private setItemClass = (element: ElementRef, className: string, addClass: boolean) => {
+  private setItemClass = (
+    element: ElementRef,
+    className: string,
+    addClass: boolean
+  ) => {
     const input = element.nativeElement as HTMLElement;
     const item = input.closest('ion-item');
     if (item) {
@@ -722,6 +790,5 @@ export class IonIntlTelInputComponent implements ControlValueAccessor, OnInit, O
         classList.remove(className);
       }
     }
-  }
-
+  };
 }

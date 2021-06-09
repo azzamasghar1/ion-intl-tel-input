@@ -17,6 +17,7 @@
           name="phone" 
           [(ngModel)]="phone" 
           #phoneControl="ngModel"
+          required
           ionIntlTelInputValid
           [defaultCountryiso]="defaultCountryIsoTest"
           [dialCodePrefix]= "dialCodePrefix"

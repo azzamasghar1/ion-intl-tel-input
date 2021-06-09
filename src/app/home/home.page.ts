@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { IonIntlTelInputValidators } from 'ion-intl-tel-input';
+import { IonIntlTelInputModel } from 'ion-intl-tel-input';
 
 @Component({
   selector: 'app-home',
@@ -10,9 +11,14 @@ import { IonIntlTelInputValidators } from 'ion-intl-tel-input';
 })
 export class HomePage implements OnInit {
 
-  formValue = {phoneNumber: '', test: ''};
+  phone: IonIntlTelInputModel = {
+    dialCode: '+92',
+    internationalNumber: '+92 300 1234567',
+    isoCode: 'pk',
+    nationalNumber: '300 1234567'
+  };
+  formValue = {phoneNumber: this.phone, test: ''};
   form: FormGroup;
-  phone = '';
 
   defaultCountryIsoTest = 'pk';
   dialCodePrefix = '+';
@@ -42,7 +48,7 @@ export class HomePage implements OnInit {
   ngOnInit() {
     this.form = new FormGroup({
       phoneNumber: new FormControl({
-        value: this.formValue.phoneNumber,
+        value: /* null */this.formValue.phoneNumber,
         disabled: this.disableTest
       }, [
         Validators.required,
@@ -58,6 +64,7 @@ export class HomePage implements OnInit {
   get phoneNumber() { return this.form.get('phoneNumber'); }
 
   onSubmit() {
+    console.log(this.phoneNumber);
     console.log(this.phoneNumber.value);
   }
 
