@@ -635,11 +635,14 @@ export class IonIntlTelInputComponent
       'Insert',
       'Delete',
       'Backspace',
+      'Tab'
     ];
+
+    const isCtrlKey = event.ctrlKey || event.metaKey;
 
     if (
       !allowedChars.test(event.key) &&
-      !(event.ctrlKey && allowedCtrlChars.test(event.key)) &&
+      !(isCtrlKey && allowedCtrlChars.test(event.key)) &&
       !allowedOtherKeys.includes(event.key)
     ) {
       event.preventDefault();
