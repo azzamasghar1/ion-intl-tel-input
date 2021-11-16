@@ -623,7 +623,7 @@ export class IonIntlTelInputComponent
   }
 
   onNumberKeyDown(event: KeyboardEvent) {
-    const allowedChars = /^[0-9\+\-\ ]/;
+    const allowedChars = /^[0-9\+\-\(\)\.\ ]/;
     const allowedCtrlChars = /[axcv]/;
     const allowedOtherKeys = [
       'ArrowLeft',
