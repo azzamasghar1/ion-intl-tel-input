@@ -35,14 +35,14 @@ npm install ion-intl-tel-input --save
 
 #### Or Install with All dependencies
 ```
-npm install ion-intl-tel-input ionic-selectable flag-icon-css google-libphonenumber --save
+npm install ion-intl-tel-input ionic-selectable flag-icons google-libphonenumber --save
 ```
 
 #### Add flag styles
 Add the following to your `styles` array of project in `angular.json` (located in projects root directory).
 ```
 {
-  "input": "node_modules/flag-icon-css/sass/flag-icon.scss"
+  "input": "node_modules/flag-icons/sass/flag-icon.scss"
 }
 ```
 

@@ -26,7 +26,7 @@
       {{modalTitle}}
     </ng-template>
     <ng-template ionicSelectableValueTemplate let-country="value">
-      <span class="flag-icon flag-icon-{{country.flagClass}}"></span>
+      <span class="fi fi-{{country.flagClass}}"></span>
       <span *ngIf="separateDialCode">{{dialCodePrefix}}{{country.dialCode}}</span>
     </ng-template>
     <ng-template ionicSelectableItemTemplate let-country="item">
@@ -34,7 +34,7 @@
         <span *ngIf="separateDialCode">{{dialCodePrefix}}{{country.dialCode}}</span>
     </ng-template>
     <ng-template ionicSelectableItemEndTemplate let-country="item">
-      <span class="flag-icon flag-icon-{{country.flagClass}}"></span>
+      <span class="fi fi-{{country.flagClass}}"></span>
     </ng-template>
   </ionic-selectable>
 </div>
@@ -44,7 +44,7 @@
     #numberInput
     [(ngModel)]="phoneNumber"
     autocomplete="off"
-    [disabled] = "disabled" 
+    [disabled] = "disabled"
     [attr.maxLength]="maxLength"
     type="tel"
     (ionBlur)="onIonNumberBlur()"
