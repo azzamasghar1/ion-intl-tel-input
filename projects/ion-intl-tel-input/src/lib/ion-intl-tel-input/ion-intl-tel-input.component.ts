@@ -609,9 +609,9 @@ export class IonIntlTelInputComponent
         ? this.phoneUtil.format(googleNumber, PhoneNumberFormat.NATIONAL)
         : '';
 
-      if (this.separateDialCode && internationallNo) {
-        this.phoneNumber = this.removeDialCode(internationallNo);
-      }
+      // if (this.separateDialCode && internationallNo) {
+      //   this.phoneNumber = this.removeDialCode(internationallNo);
+      // }
 
       this.emitValueChange({
         internationalNumber: internationallNo,
