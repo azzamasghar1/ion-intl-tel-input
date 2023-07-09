@@ -1341,6 +1341,14 @@ export const countries: CountryI[] = [
       placeholder: ''
     },
     {
+        name: 'Kosovo',
+        isoCode: 'ks',
+        dialCode: '385',
+        flagClass: 'ks',
+        priority: 0,
+        placeholder: ''
+    },
+    {
       name: 'Northern Mariana Islands',
       isoCode: 'mp',
       dialCode: '1 670',
